@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -126,4 +128,119 @@ def game_hash
   }
 end
 
-# Write code here
+def get_all_players(game_hash)
+  new_array = []
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if attribute == :players
+        data.each do |player|
+          new_array << player
+        end
+      end
+    end
+  end
+  new_array
+end
+
+def num_points_scored(player_name)
+  points = 0
+  players = get_all_players(game_hash)
+  players.each do |player|
+    if player[:player_name] == player_name
+      points = player[:points]
+    end
+  end
+  points
+end
+
+def shoe_size(player_name)
+  shoe_size = 0
+  players = get_all_players(game_hash)
+  players.each do |player|
+    if player[:player_name] == player_name
+      puts player[:shoe]
+      shoe_size = player[:shoe]
+    end
+  end
+  shoe_size
+end
+
+def team_colors(team_name)
+  colors_array = []
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team_name
+      team_data[:colors].each { |color| colors_array << color}
+    end
+  end
+  colors_array
+end
+
+def team_names
+  teams = []
+  game_hash.each do |location, team_data|
+    teams << team_data[:team_name]
+  end
+  teams
+end
+
+def player_numbers(team_name)
+  number_array = []
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team_name
+      team_data.each do |attribute, data|
+        if attribute == :players
+          data.each do |player|
+            number_array << player[:number]
+          end
+        end
+      end
+    end
+  end
+  number_array
+end
+
+def player_stats(player_name)
+  players = get_all_players(game_hash)
+  players.each do |player|
+    if player[:player_name] == player_name
+      return player
+    end
+  end
+end
+
+def big_shoe_player
+  players = get_all_players(game_hash)
+  players.max_by do |player|
+    player[:shoe]
+  end
+end
+
+def big_shoe_rebounds
+  big_shoe_player[:rebounds]
+end
+
+def most_points_scored
+  players = get_all_players(game_hash)
+  players.max_by do |player|
+    player[:points]
+  end
+end
+
+# puts most_points_scored
+
+# get_all_players(game_hash)
+
+# num_points_scored("Ben Gordon")
+
+# shoe_size("Ben Gordon")
+
+# team_colors("Charlotte Hornets")
+
+# team_names
+
+# player_numbers("Charlotte Hornets")
+
+# player_stats("Ben Gordon")
+
+# puts big_shoe_player
+
